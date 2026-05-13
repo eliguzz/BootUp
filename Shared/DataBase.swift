@@ -2,7 +2,7 @@ import Foundation
 
 struct DataBase {
 
-    private let defaults = UserDefaults(suiteName: "group.com.eliguzz.ScreenTimeApp.data")
+    private let defaults = UserDefaults(suiteName: "group.com.eliguzz.bootup")
 
     private let applicationProfileKey = "ApplicationProfile"
 

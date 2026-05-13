@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.eliguzz.ScreenTimeApp.data</string>
+		<string>group.com.eliguzz.bootup</string>
 	</array>
 </dict>
 </plist>
