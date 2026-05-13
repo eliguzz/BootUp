@@ -14,7 +14,6 @@ private let bootLines: [String] = [
     "Compiling assets",
     "Allocating memory",
     "Warming up cache",
-    "Syncing telemetry",
     "Calibrating sensors",
     "Initializing runtime",
     "Resolving dependencies",

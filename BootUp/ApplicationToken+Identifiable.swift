@@ -9,7 +9,7 @@ import SwiftUI
 import FamilyControls
 import ManagedSettings
 
-extension ApplicationToken: Identifiable {
+extension ApplicationToken: @retroactive Identifiable {
     public var id: String {
         SharedDataManager.shared.stableKey(for: self)
     }

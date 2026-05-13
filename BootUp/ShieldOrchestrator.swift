@@ -10,11 +10,6 @@
 //  with a known urlScheme) deep-links into the target app.
 //
 
-//
-//  ShieldOrchestrator.swift
-//  BootUp
-//
-
 import Foundation
 import UIKit
 import ManagedSettings
