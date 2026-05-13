@@ -37,6 +37,9 @@
 		078AD34B2FB422AF004E692B /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34A2FB422AF004E692B /* TokenRowView.swift */; };
 		078AD34D2FB422CF004E692B /* AppIdentifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34C2FB422CF004E692B /* AppIdentifierView.swift */; };
 		078AD34F2FB42443004E692B /* TokenTimerEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34E2FB42443004E692B /* TokenTimerEditView.swift */; };
+		078AD3512FB42C97004E692B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3502FB42C97004E692B /* AppDelegate.swift */; };
+		078AD3532FB42CB1004E692B /* Notification+BootUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3522FB42CB1004E692B /* Notification+BootUp.swift */; };
+		078AD3562FB42F58004E692B /* ShieldLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3552FB42F58004E692B /* ShieldLoadingView.swift */; };
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
 		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
@@ -113,6 +116,10 @@
 		078AD34A2FB422AF004E692B /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
 		078AD34C2FB422CF004E692B /* AppIdentifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentifierView.swift; sourceTree = "<group>"; };
 		078AD34E2FB42443004E692B /* TokenTimerEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTimerEditView.swift; sourceTree = "<group>"; };
+		078AD3502FB42C97004E692B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		078AD3522FB42CB1004E692B /* Notification+BootUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+BootUp.swift"; sourceTree = "<group>"; };
+		078AD3542FB42D7B004E692B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		078AD3552FB42F58004E692B /* ShieldLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLoadingView.swift; sourceTree = "<group>"; };
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
 		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +187,7 @@
 		074564D62FB2779C00A44341 /* BootUp */ = {
 			isa = PBXGroup;
 			children = (
+				078AD3542FB42D7B004E692B /* Info.plist */,
 				074564E52FB277C200A44341 /* BootUp.entitlements */,
 				078D7A5F2FB409E600752EDA /* BootUpApp.swift */,
 				074564DB2FB2779D00A44341 /* Assets.xcassets */,
@@ -195,6 +203,9 @@
 				078AD34A2FB422AF004E692B /* TokenRowView.swift */,
 				078AD34C2FB422CF004E692B /* AppIdentifierView.swift */,
 				078AD34E2FB42443004E692B /* TokenTimerEditView.swift */,
+				078AD3502FB42C97004E692B /* AppDelegate.swift */,
+				078AD3522FB42CB1004E692B /* Notification+BootUp.swift */,
+				078AD3552FB42F58004E692B /* ShieldLoadingView.swift */,
 			);
 			path = BootUp;
 			sourceTree = "<group>";
@@ -420,13 +431,16 @@
 				078AD3412FB41CB7004E692B /* SharedDataManager.swift in Sources */,
 				0745652D2FB27A8500A44341 /* DataBase.swift in Sources */,
 				0745652A2FB27A8500A44341 /* ApplicationProfile.swift in Sources */,
+				078AD3562FB42F58004E692B /* ShieldLoadingView.swift in Sources */,
 				078AD33D2FB41C41004E692B /* AppDatabase.swift in Sources */,
 				0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */,
+				078AD3512FB42C97004E692B /* AppDelegate.swift in Sources */,
 				074565312FB27AE900A44341 /* ShieldActionExtension.swift in Sources */,
 				078AD3472FB41EB5004E692B /* LockedAppsView.swift in Sources */,
 				078AD3492FB41EC9004E692B /* SettingsView.swift in Sources */,
 				078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */,
 				078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */,
+				078AD3532FB42CB1004E692B /* Notification+BootUp.swift in Sources */,
 				078AD3432FB41E80004E692B /* AppListViewModel.swift in Sources */,
 				078AD3452FB41E9B004E692B /* MainTabView.swift in Sources */,
 			);
@@ -614,6 +628,7 @@
 				DEVELOPMENT_TEAM = YB2DK4V59Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BootUp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -645,6 +660,7 @@
 				DEVELOPMENT_TEAM = YB2DK4V59Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BootUp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
