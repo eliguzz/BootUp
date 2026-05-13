@@ -29,7 +29,11 @@
 		074565332FB27AE900A44341 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074565302FB27AE900A44341 /* ShieldActionExtension.swift */; };
 		074565352FB27AFA00A44341 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074565342FB27AFA00A44341 /* ShieldConfigurationExtension.swift */; };
 		074565372FB27B0A00A44341 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074565362FB27B0A00A44341 /* DeviceActivityMonitorExtension.swift */; };
+		078AD33D2FB41C41004E692B /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD33C2FB41C41004E692B /* AppDatabase.swift */; };
+		078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */; };
+		078AD3412FB41CB7004E692B /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3402FB41CB7004E692B /* SharedDataManager.swift */; };
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
+		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +100,11 @@
 		074565302FB27AE900A44341 /* ShieldActionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShieldActionExtension.swift; path = ../../../Downloads/files/ShieldActionExtension.swift; sourceTree = "<group>"; };
 		074565342FB27AFA00A44341 /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShieldConfigurationExtension.swift; path = ../../../Downloads/files/ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		074565362FB27B0A00A44341 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceActivityMonitorExtension.swift; path = ../../../Downloads/files/DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
+		078AD33C2FB41C41004E692B /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationToken+Identifiable.swift"; sourceTree = "<group>"; };
+		078AD3402FB41CB7004E692B /* SharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataManager.swift; sourceTree = "<group>"; };
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
+		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +176,10 @@
 				074564E82FB2781E00A44341 /* ShieldManager.swift */,
 				074564EA2FB2783100A44341 /* ShieldView.swift */,
 				074564DD2FB2779D00A44341 /* Preview Content */,
+				0797C91D2FB4161D0010D73E /* Color+Theme.swift */,
+				078AD33C2FB41C41004E692B /* AppDatabase.swift */,
+				078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */,
+				078AD3402FB41CB7004E692B /* SharedDataManager.swift */,
 			);
 			path = BootUp;
 			sourceTree = "<group>";
@@ -387,11 +399,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				078AD3412FB41CB7004E692B /* SharedDataManager.swift in Sources */,
 				0745652D2FB27A8500A44341 /* DataBase.swift in Sources */,
 				0745652A2FB27A8500A44341 /* ApplicationProfile.swift in Sources */,
+				078AD33D2FB41C41004E692B /* AppDatabase.swift in Sources */,
+				0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */,
 				074565312FB27AE900A44341 /* ShieldActionExtension.swift in Sources */,
 				074564E92FB2781E00A44341 /* ShieldManager.swift in Sources */,
 				078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */,
+				078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */,
 				074564EB2FB2783100A44341 /* ShieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
