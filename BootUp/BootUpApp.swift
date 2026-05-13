@@ -84,9 +84,22 @@ struct BootUpApp: App {
     }
 
     private func handleTimerComplete() {
-        ShieldOrchestrator.shared.completeBoot(forBundleID: targetBundleID)
-        withAnimation(.easeInOut(duration: 0.3)) {
-            isShowingShield = false
+        ShieldOrchestrator.shared.completeBoot(forBundleID: targetBundleID) { result in
+            switch result {
+            case .deepLinking:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        isShowingShield = false
+                    }
+                }
+
+            case .manualReturn, .failed:
+                // No app switch coming — dismiss the overlay so the user
+                // sees BootUp's main UI.
+                withAnimation(.easeInOut(duration: 0.6)) {
+                    isShowingShield = false
+                }
+            }
         }
     }
 

@@ -10,6 +10,11 @@
 //  with a known urlScheme) deep-links into the target app.
 //
 
+//
+//  ShieldOrchestrator.swift
+//  BootUp
+//
+
 import Foundation
 import UIKit
 import ManagedSettings
@@ -24,10 +29,23 @@ class ShieldOrchestrator {
     private let data  = SharedDataManager.shared
     private let store = ManagedSettingsStore()
 
+    /// Result the caller uses to decide overlay dismissal timing
+    enum BootCompletion {
+        case deepLinking       // a deep link is being attempted; caller should wait
+        case manualReturn      // no urlScheme; caller can dismiss overlay normally
+        case failed            // setup failed; caller should dismiss to recover
+    }
+
     /// Called from the main app when the boot sequence completes.
-    func completeBoot(forBundleID bundleID: String) {
+    /// Callback fires when the orchestrator finishes its work — either
+    /// immediately (manual return, failure) or after the deep link returns.
+    func completeBoot(
+        forBundleID bundleID: String,
+        completion: @escaping (BootCompletion) -> Void
+    ) {
         guard let token = findToken(forBundleID: bundleID) else {
             print("[ShieldOrchestrator] No token for bundleID \(bundleID)")
+            completion(.failed)
             return
         }
 
@@ -42,11 +60,27 @@ class ShieldOrchestrator {
 
         startMonitoring(for: profile, gracePeriodMinutes: gracePeriodMinutes)
 
-        // Deep-link into the target app if it has a known urlScheme
-        deepLink(forBundleID: bundleID)
+        // Determine if a deep link will be attempted
+        guard let app = knownApps.first(where: { $0.bundleID == bundleID }),
+              let scheme = app.urlScheme,
+              let url = URL(string: scheme) else {
+            print("[ShieldOrchestrator] No urlScheme for \(bundleID) — manual return")
+            completion(.manualReturn)
+            return
+        }
+
+        // Signal that we're about to deep-link, then attempt it
+        completion(.deepLinking)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            UIApplication.shared.open(url) { success in
+                print("[ShieldOrchestrator] Deep link to \(scheme) success=\(success)")
+                // The view will already be hidden by iOS at this point if successful;
+                // no further action needed from us.
+            }
+        }
     }
 
-    // Find the token for a bundle ID
 
     private func findToken(forBundleID bundleID: String) -> ApplicationToken? {
         let allBundleIDs = data.bundleIDs
@@ -61,8 +95,6 @@ class ShieldOrchestrator {
         }
     }
 
-    // Effective grace period for the token (override or global)
-
     private func effectiveGracePeriod(for token: ApplicationToken) -> Int {
         let key = data.stableKey(for: token)
         if let override = data.timerOverrides[key] {
@@ -70,8 +102,6 @@ class ShieldOrchestrator {
         }
         return data.gracePeriod
     }
-
-    // DeviceActivity interval monitor
 
     private func startMonitoring(
         for profile: ApplicationProfile,
@@ -110,26 +140,6 @@ class ShieldOrchestrator {
             print("[ShieldOrchestrator] Monitoring started for \(gracePeriodMinutes)m")
         } catch {
             print("[ShieldOrchestrator] Monitoring error: \(error)")
-        }
-    }
-
-    // Deep link into the target app, if a urlScheme is known
-
-    private func deepLink(forBundleID bundleID: String) {
-        guard let app = knownApps.first(where: { $0.bundleID == bundleID }),
-              let scheme = app.urlScheme,
-              let url = URL(string: scheme) else {
-            print("[ShieldOrchestrator] No urlScheme for \(bundleID) — manual return")
-            return
-        }
-
-        // Small delay so the unlock has time to propagate before we try
-        // to open the target app. Without this, the OS can still consider
-        // the app shielded and route the user back to the BootUp shield.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            UIApplication.shared.open(url) { success in
-                print("[ShieldOrchestrator] Deep link to \(scheme) success=\(success)")
-            }
         }
     }
 }
