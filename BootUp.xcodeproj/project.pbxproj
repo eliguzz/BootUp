@@ -36,6 +36,9 @@
 		078AD3452FB41E9B004E692B /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3442FB41E9B004E692B /* MainTabView.swift */; };
 		078AD3472FB41EB5004E692B /* LockedAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3462FB41EB5004E692B /* LockedAppsView.swift */; };
 		078AD3492FB41EC9004E692B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3482FB41EC9004E692B /* SettingsView.swift */; };
+		078AD34B2FB422AF004E692B /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34A2FB422AF004E692B /* TokenRowView.swift */; };
+		078AD34D2FB422CF004E692B /* AppIdentifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34C2FB422CF004E692B /* AppIdentifierView.swift */; };
+		078AD34F2FB42443004E692B /* TokenTimerEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD34E2FB42443004E692B /* TokenTimerEditView.swift */; };
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
 		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
@@ -111,6 +114,9 @@
 		078AD3442FB41E9B004E692B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		078AD3462FB41EB5004E692B /* LockedAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedAppsView.swift; sourceTree = "<group>"; };
 		078AD3482FB41EC9004E692B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		078AD34A2FB422AF004E692B /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
+		078AD34C2FB422CF004E692B /* AppIdentifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIdentifierView.swift; sourceTree = "<group>"; };
+		078AD34E2FB42443004E692B /* TokenTimerEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTimerEditView.swift; sourceTree = "<group>"; };
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
 		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +198,9 @@
 				078AD3442FB41E9B004E692B /* MainTabView.swift */,
 				078AD3462FB41EB5004E692B /* LockedAppsView.swift */,
 				078AD3482FB41EC9004E692B /* SettingsView.swift */,
+				078AD34A2FB422AF004E692B /* TokenRowView.swift */,
+				078AD34C2FB422CF004E692B /* AppIdentifierView.swift */,
+				078AD34E2FB42443004E692B /* TokenTimerEditView.swift */,
 			);
 			path = BootUp;
 			sourceTree = "<group>";
@@ -411,6 +420,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				078AD34F2FB42443004E692B /* TokenTimerEditView.swift in Sources */,
+				078AD34B2FB422AF004E692B /* TokenRowView.swift in Sources */,
+				078AD34D2FB422CF004E692B /* AppIdentifierView.swift in Sources */,
 				078AD3412FB41CB7004E692B /* SharedDataManager.swift in Sources */,
 				0745652D2FB27A8500A44341 /* DataBase.swift in Sources */,
 				0745652A2FB27A8500A44341 /* ApplicationProfile.swift in Sources */,

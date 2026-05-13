@@ -14,6 +14,8 @@ class AppListViewModel: ObservableObject {
     @Published var selection: FamilyActivitySelection
     @Published var globalDuration: Int
     @Published var gracePeriod: Int
+    @Published var appNames: [String: String] = [:]
+    @Published var timerOverrides: [String: Int] = [:]
 
     private let data = SharedDataManager.shared
     private let store = ManagedSettingsStore()
@@ -22,9 +24,52 @@ class AppListViewModel: ObservableObject {
         selection      = data.activitySelection
         globalDuration = data.cooldownDuration
         gracePeriod    = data.gracePeriod
+        appNames       = data.appNames
+        timerOverrides = data.timerOverrides
     }
 
-    // Selection changes — save and apply shields
+    // App Names
+
+    func appName(for token: ApplicationToken) -> String {
+        let key = data.stableKey(for: token)
+        return appNames[key] ?? "UNKNOWN APP"
+    }
+
+    func setAppName(_ name: String, for token: ApplicationToken) {
+        let key = data.stableKey(for: token)
+        appNames[key] = name.uppercased()
+        data.appNames = appNames
+    }
+
+    // Bundle IDs
+
+    func storeBundleID(_ bundleID: String, for token: ApplicationToken) {
+        data.storeBundleID(bundleID, for: token)
+    }
+
+    // Timer Overrides
+
+    func setTimerOverride(for token: ApplicationToken, duration: Int?) {
+        let key = data.stableKey(for: token)
+        if let duration {
+            timerOverrides[key] = duration
+        } else {
+            timerOverrides.removeValue(forKey: key)
+        }
+        data.timerOverrides = timerOverrides
+    }
+
+    func effectiveGracePeriod(for token: ApplicationToken) -> Int {
+        let key = data.stableKey(for: token)
+        return timerOverrides[key] ?? gracePeriod
+    }
+
+    func hasOverride(for token: ApplicationToken) -> Bool {
+        let key = data.stableKey(for: token)
+        return timerOverrides[key] != nil
+    }
+
+    // Selection — save and apply shields
 
     func save(newSelection: FamilyActivitySelection) {
         selection = newSelection

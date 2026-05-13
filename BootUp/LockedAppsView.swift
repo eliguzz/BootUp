@@ -13,6 +13,7 @@ struct LockedAppsView: View {
 
     @ObservedObject var viewModel: AppListViewModel
     @State private var isPickerPresented = false
+    @State private var selectedToken: ApplicationToken? = nil
 
     var body: some View {
         NavigationStack {
@@ -50,10 +51,21 @@ struct LockedAppsView: View {
                     }
                 )
             )
+            .sheet(item: $selectedToken) { token in
+                let isNamed = viewModel.appNames[SharedDataManager.shared.stableKey(for: token)] != nil
+
+                if isNamed {
+                    TokenTimerEditView(token: token, viewModel: viewModel)
+                } else {
+                    AppIdentifierView(token: token) { name, bundleID in
+                        viewModel.setAppName(name, for: token)
+                        viewModel.storeBundleID(bundleID, for: token)
+                        selectedToken = nil
+                    }
+                }
+            }
         }
     }
-
-    // Empty state
 
     private var emptyState: some View {
         VStack(spacing: 20) {
@@ -69,23 +81,13 @@ struct LockedAppsView: View {
         }
     }
 
-    // App list (minimal version — rows are placeholders for now)
-
     private var appList: some View {
         List {
             ForEach(Array(viewModel.selection.applicationTokens)) { token in
-                HStack(spacing: 16) {
-                    Label(token)
-                        .labelStyle(.iconOnly)
-                        .frame(width: 36, height: 36)
-
-                    Text("APP")
-                        .font(.system(size: 15, weight: .medium, design: .monospaced))
-                        .foregroundColor(.terminal)
-
-                    Spacer()
+                Button(action: { selectedToken = token }) {
+                    TokenRowView(token: token, viewModel: viewModel)
                 }
-                .padding(.vertical, 8)
+                .buttonStyle(.plain)
                 .listRowBackground(Color.appBackground)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             }
