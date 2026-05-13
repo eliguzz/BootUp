@@ -40,6 +40,7 @@
 		078AD3512FB42C97004E692B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3502FB42C97004E692B /* AppDelegate.swift */; };
 		078AD3532FB42CB1004E692B /* Notification+BootUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3522FB42CB1004E692B /* Notification+BootUp.swift */; };
 		078AD3562FB42F58004E692B /* ShieldLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3552FB42F58004E692B /* ShieldLoadingView.swift */; };
+		078AD3582FB4321B004E692B /* ShieldOrchestrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3572FB4321B004E692B /* ShieldOrchestrator.swift */; };
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
 		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 		078AD3522FB42CB1004E692B /* Notification+BootUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+BootUp.swift"; sourceTree = "<group>"; };
 		078AD3542FB42D7B004E692B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		078AD3552FB42F58004E692B /* ShieldLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldLoadingView.swift; sourceTree = "<group>"; };
+		078AD3572FB4321B004E692B /* ShieldOrchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldOrchestrator.swift; sourceTree = "<group>"; };
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
 		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,6 +208,7 @@
 				078AD3502FB42C97004E692B /* AppDelegate.swift */,
 				078AD3522FB42CB1004E692B /* Notification+BootUp.swift */,
 				078AD3552FB42F58004E692B /* ShieldLoadingView.swift */,
+				078AD3572FB4321B004E692B /* ShieldOrchestrator.swift */,
 			);
 			path = BootUp;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				078AD3512FB42C97004E692B /* AppDelegate.swift in Sources */,
 				074565312FB27AE900A44341 /* ShieldActionExtension.swift in Sources */,
 				078AD3472FB41EB5004E692B /* LockedAppsView.swift in Sources */,
+				078AD3582FB4321B004E692B /* ShieldOrchestrator.swift in Sources */,
 				078AD3492FB41EC9004E692B /* SettingsView.swift in Sources */,
 				078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */,
 				078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */,

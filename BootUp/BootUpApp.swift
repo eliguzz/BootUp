@@ -84,9 +84,7 @@ struct BootUpApp: App {
     }
 
     private func handleTimerComplete() {
-        // TEMPORARY for sub-step B — just dismiss the loading view.
-        // Sub-step C will add the unlock + monitor start here.
-        print("[BootUpApp] Boot sequence complete for \(targetBundleID)")
+        ShieldOrchestrator.shared.completeBoot(forBundleID: targetBundleID)
         withAnimation(.easeInOut(duration: 0.3)) {
             isShowingShield = false
         }

@@ -126,12 +126,13 @@ struct ShieldLoadingView: View {
     // Status text changes based on whether the app will auto-launch
     private var statusText: String {
         if isComplete {
-            return hasURLScheme ? "READY." : "READY. RETURN MANUALLY."
+            return hasURLScheme ? "READY." : "READY. OPEN \(appName.uppercased()) MANUALLY."
+        } else if !hasURLScheme && currentPercent >= 85 {
+            return "PREPARE TO OPEN \(appName.uppercased()) MANUALLY..."
         } else {
             return "STAND BY..."
         }
     }
-
     // Percent timer
 
     private func startPercentTimer() {
