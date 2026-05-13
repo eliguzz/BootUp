@@ -32,6 +32,10 @@
 		078AD33D2FB41C41004E692B /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD33C2FB41C41004E692B /* AppDatabase.swift */; };
 		078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */; };
 		078AD3412FB41CB7004E692B /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3402FB41CB7004E692B /* SharedDataManager.swift */; };
+		078AD3432FB41E80004E692B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3422FB41E80004E692B /* AppListViewModel.swift */; };
+		078AD3452FB41E9B004E692B /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3442FB41E9B004E692B /* MainTabView.swift */; };
+		078AD3472FB41EB5004E692B /* LockedAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3462FB41EB5004E692B /* LockedAppsView.swift */; };
+		078AD3492FB41EC9004E692B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3482FB41EC9004E692B /* SettingsView.swift */; };
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
 		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
@@ -103,6 +107,10 @@
 		078AD33C2FB41C41004E692B /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationToken+Identifiable.swift"; sourceTree = "<group>"; };
 		078AD3402FB41CB7004E692B /* SharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataManager.swift; sourceTree = "<group>"; };
+		078AD3422FB41E80004E692B /* AppListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
+		078AD3442FB41E9B004E692B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		078AD3462FB41EB5004E692B /* LockedAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedAppsView.swift; sourceTree = "<group>"; };
+		078AD3482FB41EC9004E692B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
 		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +188,10 @@
 				078AD33C2FB41C41004E692B /* AppDatabase.swift */,
 				078AD33E2FB41C82004E692B /* ApplicationToken+Identifiable.swift */,
 				078AD3402FB41CB7004E692B /* SharedDataManager.swift */,
+				078AD3422FB41E80004E692B /* AppListViewModel.swift */,
+				078AD3442FB41E9B004E692B /* MainTabView.swift */,
+				078AD3462FB41EB5004E692B /* LockedAppsView.swift */,
+				078AD3482FB41EC9004E692B /* SettingsView.swift */,
 			);
 			path = BootUp;
 			sourceTree = "<group>";
@@ -405,10 +417,14 @@
 				078AD33D2FB41C41004E692B /* AppDatabase.swift in Sources */,
 				0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */,
 				074565312FB27AE900A44341 /* ShieldActionExtension.swift in Sources */,
+				078AD3472FB41EB5004E692B /* LockedAppsView.swift in Sources */,
+				078AD3492FB41EC9004E692B /* SettingsView.swift in Sources */,
 				074564E92FB2781E00A44341 /* ShieldManager.swift in Sources */,
 				078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */,
 				078AD33F2FB41C82004E692B /* ApplicationToken+Identifiable.swift in Sources */,
 				074564EB2FB2783100A44341 /* ShieldView.swift in Sources */,
+				078AD3432FB41E80004E692B /* AppListViewModel.swift in Sources */,
+				078AD3452FB41E9B004E692B /* MainTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

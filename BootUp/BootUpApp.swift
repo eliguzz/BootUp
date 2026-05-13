@@ -12,7 +12,7 @@ struct BootUpApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ShieldView()
+            MainTabView()
                 .task {
                     do {
                         try await center.requestAuthorization(for: .individual)
