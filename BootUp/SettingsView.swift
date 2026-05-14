@@ -14,9 +14,13 @@ struct SettingsView: View {
     @State private var localDuration: Int = 30
     @State private var localGracePeriod: Int = 5
 
+    @Environment(\.openURL) private var openURL
+
+    private let repoURL = URL(string: "https://github.com/eliguzz/BootUp")!
+
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .bottomLeading) {
                 Color.appBackground.ignoresSafeArea()
 
                 ScrollView {
@@ -92,51 +96,25 @@ struct SettingsView: View {
                                 .foregroundColor(.terminalFaint)
                         }
 
-                        // About
-
-                        VStack(alignment: .leading, spacing: 12) {
-                            sectionHeader("ABOUT")
-                            infoRow(
-                                label: "VERSION",
-                                value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0"
-                            )
-                            infoRow(label: "BUILD",   value: "open source")
-                            infoRow(label: "GITHUB",  value: "eliguzz/BootUp")
-                        }
-
-                        #if DEBUG
-                        VStack(alignment: .leading, spacing: 12) {
-                            sectionHeader("DEBUG")
-
-                            Button("RESET AUTHORIZATION") {
-                                Task {
-                                    AuthorizationCenter.shared.revokeAuthorization { result in
-                                        switch result {
-                                        case .success:
-                                            print("authorization revoked")
-                                            Task {
-                                                do {
-                                                    try await AuthorizationCenter.shared
-                                                        .requestAuthorization(for: .individual)
-                                                    print("re-authorized")
-                                                } catch {
-                                                    print("re-auth error: \(error)")
-                                                }
-                                            }
-                                        case .failure(let error):
-                                            print("revoke error: \(error)")
-                                        }
-                                    }
-                                }
-                            }
-                            .font(.system(size: 13, design: .monospaced))
-                            .foregroundColor(.red)
-                        }
-                        #endif
-
-                        Spacer()
+                        Spacer().frame(height: 60)
                     }
                     .padding(32)
+                }
+
+                // GitHub repo link
+
+                Button {
+                    openURL(repoURL)
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "chevron.left.forwardslash.chevron.right")
+                            .font(.system(size: 11))
+                        Text("eliguzz/BootUp")
+                            .font(.system(size: 11, design: .monospaced))
+                    }
+                    .foregroundColor(.terminalFaint)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -174,17 +152,5 @@ struct SettingsView: View {
         Text(text)
             .font(.system(size: 11, weight: .medium, design: .monospaced))
             .foregroundColor(.terminalFaint)
-    }
-
-    private func infoRow(label: String, value: String) -> some View {
-        HStack {
-            Text(label)
-                .font(.system(size: 13, design: .monospaced))
-                .foregroundColor(.terminalDim)
-            Spacer()
-            Text(value)
-                .font(.system(size: 13, design: .monospaced))
-                .foregroundColor(.terminal)
-        }
     }
 }

@@ -51,7 +51,7 @@ struct ShieldLoadingView: View {
 
                 // Header
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("BOOTUP ENGINE")
+                    Text("BOOT UP ENGINE")
                         .font(.system(size: 13, weight: .medium, design: .monospaced))
                         .foregroundColor(.terminalDim)
 

@@ -68,11 +68,14 @@ struct BootUpApp: App {
         let params     = components?.queryItems
 
         let bundle = params?.first(where: { $0.name == "bundle" })?.value ?? ""
-        let name = params?.first(where: { $0.name == "name" })?.value
-            .flatMap { $0.removingPercentEncoding } ?? "APP"
+        let key    = params?.first(where: { $0.name == "key" })?.value ?? ""
         let duration = Double(
             params?.first(where: { $0.name == "duration" })?.value ?? "30"
         ) ?? Double(SharedDataManager.shared.cooldownDuration)
+
+        // Look up the display name in the main app — the extension skipped this
+        // work to fire the notification faster.
+        let name = SharedDataManager.shared.appNames[key] ?? "APP"
 
         targetBundleID = bundle
         targetAppName  = name
@@ -94,8 +97,6 @@ struct BootUpApp: App {
                 }
 
             case .manualReturn, .failed:
-                // No app switch coming — dismiss the overlay so the user
-                // sees BootUp's main UI.
                 withAnimation(.easeInOut(duration: 0.6)) {
                     isShowingShield = false
                 }
@@ -112,7 +113,8 @@ struct BootUpApp: App {
         }
 
         do {
-            _ = try await center.requestAuthorization(options: [.alert, .sound])
+            _ = try await center.requestAuthorization(
+                options: [.alert, .sound])
         } catch {
             print("Notification authorization error: \(error)")
         }
