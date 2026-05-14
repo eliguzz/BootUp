@@ -1,7 +1,7 @@
 # Boot Up
 Boot Up was created to solve my problem of opening instagram reels whenever I had a second to spare. It uses Apple's Screen Time APIs to lock down user selected apps and enforces/integrates a fake loading screen as the only way to unlock them.
 
-[GIF of the loading screen here]
+<img width="1018" height="469" alt="IMG_4662" src="https://github.com/user-attachments/assets/ce3606b1-5072-4f87-b752-fa5b3a60df22" />
 
 ## The Psychology
 I like playing video games but I found myself scrolling on instagram even when I had the time to make some progress in the video game I am playing at the time. Why? Because instagram reels loads instantly and my PC or Steam deck takes a minute or two to boot up a game. So I thought, why dont I force a loading screen on instagram as well so I will play my game instead of brain rotting. (lesser of two evils?)
