@@ -86,6 +86,13 @@ class ShieldActionExtension: ShieldActionDelegate {
     }
 
     private func loadBootDuration(for key: String) -> Int {
+        // Per-app override first
+        if let data = defaults?.data(forKey: "bootDurationOverrides"),
+           let decoded = try? JSONDecoder().decode([String: Int].self, from: data),
+           let override = decoded[key] {
+            return override
+        }
+        // Fall back to global
         let global = defaults?.integer(forKey: "cooldownDuration") ?? 0
         return global == 0 ? 30 : global
     }

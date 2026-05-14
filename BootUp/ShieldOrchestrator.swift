@@ -92,7 +92,7 @@ class ShieldOrchestrator {
 
     private func effectiveGracePeriod(for token: ApplicationToken) -> Int {
         let key = data.stableKey(for: token)
-        if let override = data.timerOverrides[key] {
+        if let override = data.gracePeriodOverrides[key] {
             return override
         }
         return data.gracePeriod

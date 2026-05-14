@@ -15,17 +15,19 @@ class AppListViewModel: ObservableObject {
     @Published var globalDuration: Int
     @Published var gracePeriod: Int
     @Published var appNames: [String: String] = [:]
-    @Published var timerOverrides: [String: Int] = [:]
+    @Published var gracePeriodOverrides: [String: Int] = [:]
+    @Published var bootDurationOverrides: [String: Int] = [:]
 
     private let data = SharedDataManager.shared
     private let store = ManagedSettingsStore()
 
     init() {
-        selection      = data.activitySelection
-        globalDuration = data.cooldownDuration
-        gracePeriod    = data.gracePeriod
-        appNames       = data.appNames
-        timerOverrides = data.timerOverrides
+        selection             = data.activitySelection
+        globalDuration        = data.cooldownDuration
+        gracePeriod           = data.gracePeriod
+        appNames              = data.appNames
+        gracePeriodOverrides  = data.gracePeriodOverrides
+        bootDurationOverrides = data.bootDurationOverrides
     }
 
     // App Names
@@ -47,26 +49,48 @@ class AppListViewModel: ObservableObject {
         data.storeBundleID(bundleID, for: token)
     }
 
-    // Timer Overrides
+    // Grace Period Overrides
 
-    func setTimerOverride(for token: ApplicationToken, duration: Int?) {
+    func setGracePeriodOverride(for token: ApplicationToken, duration: Int?) {
         let key = data.stableKey(for: token)
         if let duration {
-            timerOverrides[key] = duration
+            gracePeriodOverrides[key] = duration
         } else {
-            timerOverrides.removeValue(forKey: key)
+            gracePeriodOverrides.removeValue(forKey: key)
         }
-        data.timerOverrides = timerOverrides
+        data.gracePeriodOverrides = gracePeriodOverrides
     }
 
     func effectiveGracePeriod(for token: ApplicationToken) -> Int {
         let key = data.stableKey(for: token)
-        return timerOverrides[key] ?? gracePeriod
+        return gracePeriodOverrides[key] ?? gracePeriod
     }
 
-    func hasOverride(for token: ApplicationToken) -> Bool {
+    func hasGracePeriodOverride(for token: ApplicationToken) -> Bool {
         let key = data.stableKey(for: token)
-        return timerOverrides[key] != nil
+        return gracePeriodOverrides[key] != nil
+    }
+
+    // Boot Duration Overrides
+
+    func setBootDurationOverride(for token: ApplicationToken, duration: Int?) {
+        let key = data.stableKey(for: token)
+        if let duration {
+            bootDurationOverrides[key] = duration
+        } else {
+            bootDurationOverrides.removeValue(forKey: key)
+        }
+        data.bootDurationOverrides = bootDurationOverrides
+    }
+
+    func effectiveBootDuration(for token: ApplicationToken) -> Int {
+        let key = data.stableKey(for: token)
+        return bootDurationOverrides[key] ?? globalDuration
+    }
+
+    func hasBootDurationOverride(for token: ApplicationToken) -> Bool {
+        let key = data.stableKey(for: token)
+        return bootDurationOverrides[key] != nil
     }
 
     // Selection — save and apply shields

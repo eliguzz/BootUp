@@ -18,7 +18,22 @@ struct TokenRowView: View {
     private var isUnnamed: Bool {
         viewModel.appNames[SharedDataManager.shared.stableKey(for: token)] == nil
     }
+    
+    private var rowSubtitle: String {
+        if isUnnamed { return "tap to identify" }
 
+        let hasBoot  = viewModel.hasBootDurationOverride(for: token)
+        let hasGrace = viewModel.hasGracePeriodOverride(for: token)
+
+        switch (hasBoot, hasGrace) {
+        case (true, true):   return "custom boot · custom grace"
+        case (true, false):  return "custom boot"
+        case (false, true):  return "custom grace"
+        case (false, false): return "default timers"
+        }
+    }
+    
+    
     var body: some View {
         HStack(spacing: 16) {
             Label(token)
@@ -31,13 +46,9 @@ struct TokenRowView: View {
                     .foregroundColor(isUnnamed ? .terminalFaint : .terminal)
                     .lineLimit(1)
 
-                Text(
-                    isUnnamed
-                        ? "tap to identify"
-                        : viewModel.hasOverride(for: token)
-                            ? "custom grace"
-                            : "default grace"
-                )
+                Text(rowSubtitle)
+                    .font(.system(size: 10, weight: .regular, design: .monospaced))
+                    .foregroundColor(isUnnamed ? .terminal : .terminalFaint)
                 .font(.system(size: 10, weight: .regular, design: .monospaced))
                 .foregroundColor(isUnnamed ? .terminal : .terminalFaint)
             }
@@ -49,9 +60,14 @@ struct TokenRowView: View {
                     .font(.system(size: 16))
                     .foregroundColor(.terminal)
             } else {
-                Text("\(viewModel.effectiveGracePeriod(for: token))m")
-                    .font(.system(size: 14, weight: .bold, design: .monospaced))
-                    .foregroundColor(.terminal)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(viewModel.effectiveBootDuration(for: token))s")
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .foregroundColor(.terminal)
+                    Text("\(viewModel.effectiveGracePeriod(for: token))m")
+                        .font(.system(size: 10, weight: .regular, design: .monospaced))
+                        .foregroundColor(.terminalDim)
+                }
             }
 
             Image(systemName: "chevron.right")

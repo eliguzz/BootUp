@@ -16,7 +16,8 @@ enum SharedKey {
     static let gracePeriod        = "gracePeriod"
     static let appNames           = "appNames"
     static let bundleIDs          = "bundleIDs"
-    static let timerOverrides     = "timerOverrides"
+    static let gracePeriodOverrides   = "gracePeriodOverrides"
+    static let bootDurationOverrides  = "bootDurationOverrides"
     static let activitySelection  = "activitySelection"
 }
 
@@ -96,18 +97,33 @@ class SharedDataManager {
         set { defaults.set(newValue, forKey: SharedKey.gracePeriod) }
     }
 
-    // Timer Overrides (per-app custom durations)
+    // Grace Period Overrides (per-app, in minutes)
 
-    var timerOverrides: [String: Int] {
+    var gracePeriodOverrides: [String: Int] {
         get {
-            guard let data = defaults.data(forKey: SharedKey.timerOverrides),
+            guard let data = defaults.data(forKey: SharedKey.gracePeriodOverrides),
                   let decoded = try? JSONDecoder().decode([String: Int].self, from: data)
             else { return [:] }
             return decoded
         }
         set {
             guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-            defaults.set(encoded, forKey: SharedKey.timerOverrides)
+            defaults.set(encoded, forKey: SharedKey.gracePeriodOverrides)
+        }
+    }
+
+    // Boot Duration Overrides (per-app, in seconds)
+
+    var bootDurationOverrides: [String: Int] {
+        get {
+            guard let data = defaults.data(forKey: SharedKey.bootDurationOverrides),
+                  let decoded = try? JSONDecoder().decode([String: Int].self, from: data)
+            else { return [:] }
+            return decoded
+        }
+        set {
+            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(encoded, forKey: SharedKey.bootDurationOverrides)
         }
     }
 
