@@ -22,6 +22,7 @@ private let bootLines: [String] = [
     "Verifying integrity",
     "Spawning threads",
     "Linking libraries",
+    "Easter egg found",
 ]
 
 struct ShieldLoadingView: View {
@@ -51,7 +52,7 @@ struct ShieldLoadingView: View {
 
                 // Header
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("BOOT UP ENGINE")
+                    Text("BOOT UP")
                         .font(.system(size: 13, weight: .medium, design: .monospaced))
                         .foregroundColor(.terminalDim)
 

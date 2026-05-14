@@ -1,3 +1,10 @@
+//
+//  ShieldConfigurationExtension.swift
+//  ShieldConfigurationExtension
+//
+//  Created by Eli on 5/13/26.
+//
+
 import ManagedSettings
 import ManagedSettingsUI
 import UIKit
@@ -32,7 +39,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 renderingMode: .alwaysOriginal
             ),
             title: ShieldConfiguration.Label(
-                text: "BOOT UP ENGINE",
+                text: "BOOT UP",
                 color: UIColor(red: 0.18, green: 1.0, blue: 0.45, alpha: 1.0)
             ),
             subtitle: ShieldConfiguration.Label(

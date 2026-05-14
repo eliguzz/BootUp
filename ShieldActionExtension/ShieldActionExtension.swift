@@ -1,3 +1,9 @@
+//
+//  ShieldActionExtension.swift
+//  ShieldActionExtension
+//
+//  Created by Eli on 5/13/26.
+//
 import ManagedSettings
 import FamilyControls
 import UIKit
@@ -56,7 +62,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         let urlString = "bootup://launch?bundle=\(bundleID)&duration=\(duration)&key=\(key)"
 
         let content = UNMutableNotificationContent()
-        content.title             = "BOOT UP ENGINE"
+        content.title             = "BOOT UP"
         content.body              = "SELECT TO START BOOT UP"
         content.sound             = .default
         content.interruptionLevel = .timeSensitive

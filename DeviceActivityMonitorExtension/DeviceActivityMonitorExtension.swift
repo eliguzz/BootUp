@@ -1,9 +1,15 @@
+//
+//  DeviceActivityMonitorExtension.swift
+//  DeviceActivityMonitorExtension
+//
+//  Created by Eli on 5/13/26.
+//
+
 import DeviceActivity
 import ManagedSettings
 import Foundation
 
-// Replaces the auto-generated file inside your Device Activity Monitor Extension target.
-// Class name must match NSExtensionPrincipalClass in the extension's Info.plist.
+// fails if exceeds 6mb in ram or something
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
     override func intervalDidEnd(for activity: DeviceActivityName) {

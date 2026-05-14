@@ -5,11 +5,6 @@
 //  Created by Eli on 5/13/26.
 //
 
-//  After the boot sequence completes, unlocks the specific app, starts
-//  a DeviceActivity interval monitor for re-shielding, and (for apps
-//  with a known urlScheme) deep-links into the target app.
-//
-
 import Foundation
 import UIKit
 import ManagedSettings
