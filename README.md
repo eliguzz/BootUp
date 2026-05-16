@@ -3,6 +3,8 @@ Boot Up was created to solve my problem of opening instagram reels whenever I ha
 
 <img width="1018" height="469" alt="IMG_4662" src="https://github.com/user-attachments/assets/ce3606b1-5072-4f87-b752-fa5b3a60df22" />
 
+### [Join the Beta test!](https://testflight.apple.com/join/cWjTfdbt)
+
 ## The Psychology
 I like playing video games but I found myself scrolling on instagram even when I had the time to make some progress in the video game I am playing at the time. Why? Because instagram reels loads instantly and my PC or Steam deck takes a minute or two to boot up a game. So I thought, why dont I force a loading screen on instagram as well so I will play my game instead of brain rotting. (lesser of two evils?)
 
@@ -62,9 +64,13 @@ I like playing video games but I found myself scrolling on instagram even when I
 ```
 ## Things to do/figure out
 * Make a github pages thing
+* Add good onboarding tutorial thing I guess
 * Add turn off buttons, turn off for every app, turn off per app, potentially turn off grace period or boot timer button option?
-* Figure out how to go directly into app without a notification from static shield screen. Literally not possible from the research I have done kms
+* Figure out how to go directly into app without a notification from static shield screen.
+    - this was solved by the shortcut automation option in v1.2, its not perfect as it requres user set up so leaving this still here
+    - Need to update pipeline in readme to include shortcut automation potential pipeline
 * make notifications still come through for the shielded apps so I still get instagram dms. also doesnt seem possible with current api
+* Shield api locking down widgets for some apps. Somehow unlock the widgets but leave apps locked
 * speed up notification coming from primary button in static shield screen somehow
 * Figure out @AppStorage to replace UserDefaults, it broke the DeviceActivityMonitor extension before...
 * Add a donation link in github repo or maybe even in app donation? apple takes a 30% cut bruh
