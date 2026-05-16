@@ -68,6 +68,7 @@ I like playing video games but I found myself scrolling on instagram even when I
 * Add turn off buttons, turn off for every app, turn off per app, potentially turn off grace period or boot timer button option?
 * Figure out how to go directly into app without a notification from static shield screen.
     - this was solved by the shortcut automation option in v1.2, its not perfect as it requres user set up so leaving this still here
+    - Need to update pipeline in readme to include shortcut automation potential pipeline
 * make notifications still come through for the shielded apps so I still get instagram dms. also doesnt seem possible with current api
 * Shield api locking down widgets for some apps. Somehow unlock the widgets but leave apps locked
 * speed up notification coming from primary button in static shield screen somehow
