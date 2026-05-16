@@ -17,7 +17,6 @@ class AppListViewModel: ObservableObject {
     @Published var appNames: [String: String] = [:]
     @Published var gracePeriodOverrides: [String: Int] = [:]
     @Published var bootDurationOverrides: [String: Int] = [:]
-    @Published var automationEnabled: [String: Bool] = [:]
     
     private let data = SharedDataManager.shared
     private let store = ManagedSettingsStore()
@@ -29,7 +28,6 @@ class AppListViewModel: ObservableObject {
         appNames              = data.appNames
         gracePeriodOverrides  = data.gracePeriodOverrides
         bootDurationOverrides = data.bootDurationOverrides
-        automationEnabled = data.automationEnabled
     }
 
     // App Names
@@ -94,19 +92,6 @@ class AppListViewModel: ObservableObject {
         let key = data.stableKey(for: token)
         return bootDurationOverrides[key] != nil
     }
-    
-    // shortcut automation stuff
-    func setAutomationEnabled(_ enabled: Bool, for token: ApplicationToken) {
-        let key = data.stableKey(for: token)
-        automationEnabled[key] = enabled
-        data.automationEnabled = automationEnabled
-    }
-
-    func isAutomationEnabled(for token: ApplicationToken) -> Bool {
-        let key = data.stableKey(for: token)
-        return automationEnabled[key] ?? false
-    }
-    
 
     // Selection — save and apply shields
 

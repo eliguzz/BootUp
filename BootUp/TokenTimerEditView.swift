@@ -14,6 +14,7 @@ struct TokenTimerEditView: View {
     let token: ApplicationToken
     @ObservedObject var viewModel: AppListViewModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
 
     // Boot duration state
     @State private var useBootCustom: Bool
@@ -22,6 +23,11 @@ struct TokenTimerEditView: View {
     // Grace period state
     @State private var useGraceCustom: Bool
     @State private var customGracePeriod: Int
+
+    // Automation instructions
+    @State private var showInstructions: Bool = false
+
+    private let repoURL = URL(string: "https://github.com/eliguzz/BootUp")!
 
     init(token: ApplicationToken, viewModel: AppListViewModel) {
         self.token = token
@@ -138,29 +144,8 @@ struct TokenTimerEditView: View {
                                 .foregroundColor(.terminalFaint)
                         }
                     }
-                    
-                    // switch for automation, this honestly does nothing
-                    if #available(iOS 26.0, *) {
-                        Divider().background(Color.terminalFaint)
 
-                        VStack(alignment: .leading, spacing: 12) {
-                            Toggle(isOn: Binding(
-                                get: { viewModel.isAutomationEnabled(for: token) },
-                                set: { viewModel.setAutomationEnabled($0, for: token) }
-                            )) {
-                                Text("USE SHORTCUTS AUTOMATION")
-                                    .font(.system(size: 13, weight: .medium, design: .monospaced))
-                                    .foregroundColor(.terminal)
-                            }
-                            .tint(.terminal)
-
-                            Text("Faster launch via the Shortcuts app. Requires per-app setup. Notification path still works as a fallback.")
-                                .font(.system(size: 11, design: .monospaced))
-                                .foregroundColor(.terminalFaint)
-                        }
-                    }
-
-                    Spacer().frame(height: 16)
+                    Spacer().frame(height: 8)
 
                     Button {
                         viewModel.setBootDurationOverride(
@@ -181,12 +166,94 @@ struct TokenTimerEditView: View {
                             .background(Color.terminal)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                     }
+
+                    Divider().background(Color.terminalFaint)
+
+                    // add shortcuts automation instructions
+                    automationInstructionsSection
                 }
                 .padding(32)
             }
         }
         .presentationDetents([.large])
         .presentationBackground(Color.appBackground)
+    }
+
+    // Automation Instructions
+
+    private var automationInstructionsSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showInstructions.toggle()
+                }
+            } label: {
+                HStack {
+                    Text("SHORTCUTS AUTOMATION (HIGHLY RECOMMENDED)")
+                        .font(.system(size: 11, weight: .medium, design: .monospaced))
+                        .foregroundColor(.terminalDim)
+                    Spacer()
+                    Image(systemName: showInstructions ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 11))
+                        .foregroundColor(.terminalDim)
+                }
+            }
+            .buttonStyle(.plain)
+
+            if showInstructions {
+                VStack(alignment: .leading, spacing: 12) {
+
+                    Text("Faster launch via the Shortcuts app. Set this up once per locked app.")
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundColor(.terminalFaint)
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        instructionLine("01", "Open the Shortcuts app")
+                        instructionLine("02", "Tap the Automation tab")
+                        instructionLine("03", "Tap + or New Automation")
+                        instructionLine("04", "Search for or select \"App\"")
+                        instructionLine("05", "Select choose and search for your app: \(viewModel.appName(for: token))")
+                        instructionLine("06", "Select check mark in top right to confirm")
+                        instructionLine("07", "Toggle \"Is Opened\" on")
+                        instructionLine("08", "Toggle \"Run Immediately\" on")
+                        instructionLine("09", "Toggle \"Notify When Run\" off")
+                        instructionLine("10", "Tap Next")
+                        instructionLine("11", "Select \"Create New Shortcut\" under \"Get Started\"")
+                        instructionLine("12", "Search \"Launch with Boot Up\" and select it")
+                        instructionLine("13", "Set Target App to your app: \(viewModel.appName(for: token))")
+                        instructionLine("14", "Tap the check mark to complete the automation setup")
+                    }
+
+                    Button {
+                        openURL(repoURL)
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "chevron.left.forwardslash.chevron.right")
+                                .font(.system(size: 10))
+                            Text("full guide with screenshots")
+                                .font(.system(size: 11, design: .monospaced))
+                        }
+                        .foregroundColor(.terminalDim)
+                    }
+                    .padding(.top, 4)
+                }
+            }
+        }
+    }
+
+    private func instructionLine(_ number: String, _ text: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(number)
+                .font(.system(size: 11, weight: .medium, design: .monospaced))
+                .foregroundColor(.terminalFaint)
+                .frame(width: 20, alignment: .leading)
+            Text(text)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundColor(.terminal)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
     }
 
     private func stepperLabel(_ symbol: String) -> some View {

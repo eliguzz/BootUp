@@ -19,7 +19,6 @@ enum SharedKey {
     static let gracePeriodOverrides   = "gracePeriodOverrides"
     static let bootDurationOverrides  = "bootDurationOverrides"
     static let activitySelection  = "activitySelection"
-    static let automationEnabled = "automationEnabled"
     static let launchPasses = "launchPasses"
 }
 
@@ -148,18 +147,6 @@ class SharedDataManager {
     
     
     // stuff for shortcut automation ability
-    var automationEnabled: [String: Bool] {
-        get {
-            guard let data = defaults.data(forKey: SharedKey.automationEnabled),
-                  let decoded = try? JSONDecoder().decode([String: Bool].self, from: data)
-            else { return [:] }
-            return decoded
-        }
-        set {
-            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-            defaults.set(encoded, forKey: SharedKey.automationEnabled)
-        }
-    }
 
     struct AddedApp: Hashable {
         let stableKey: String
