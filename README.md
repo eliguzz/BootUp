@@ -3,6 +3,8 @@ Boot Up was created to solve my problem of opening instagram reels whenever I ha
 
 <img width="1018" height="469" alt="IMG_4662" src="https://github.com/user-attachments/assets/ce3606b1-5072-4f87-b752-fa5b3a60df22" />
 
+### [Join the Beta test!](https://testflight.apple.com/join/cWjTfdbt)
+
 ## The Psychology
 I like playing video games but I found myself scrolling on instagram even when I had the time to make some progress in the video game I am playing at the time. Why? Because instagram reels loads instantly and my PC or Steam deck takes a minute or two to boot up a game. So I thought, why dont I force a loading screen on instagram as well so I will play my game instead of brain rotting. (lesser of two evils?)
 
