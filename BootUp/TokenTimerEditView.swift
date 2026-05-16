@@ -27,7 +27,7 @@ struct TokenTimerEditView: View {
     // Automation instructions
     @State private var showInstructions: Bool = false
 
-    private let repoURL = URL(string: "https://github.com/eliguzz/BootUp")!
+    private let repoURL = URL(string: "https://github.com/eliguzz/BootUp/blob/main/automationINSTRUCTIONS.md")!
 
     init(token: ApplicationToken, viewModel: AppListViewModel) {
         self.token = token
