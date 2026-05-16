@@ -64,9 +64,12 @@ I like playing video games but I found myself scrolling on instagram even when I
 ```
 ## Things to do/figure out
 * Make a github pages thing
+* Add good onboarding tutorial thing I guess
 * Add turn off buttons, turn off for every app, turn off per app, potentially turn off grace period or boot timer button option?
-* Figure out how to go directly into app without a notification from static shield screen. Literally not possible from the research I have done kms
+* Figure out how to go directly into app without a notification from static shield screen.
+    - this was solved by the shortcut automation option in v1.2, its not perfect as it requres user set up so leaving this still here
 * make notifications still come through for the shielded apps so I still get instagram dms. also doesnt seem possible with current api
+* Shield api locking down widgets for some apps. Somehow unlock the widgets but leave apps locked
 * speed up notification coming from primary button in static shield screen somehow
 * Figure out @AppStorage to replace UserDefaults, it broke the DeviceActivityMonitor extension before...
 * Add a donation link in github repo or maybe even in app donation? apple takes a 30% cut bruh
