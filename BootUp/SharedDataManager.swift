@@ -19,6 +19,8 @@ enum SharedKey {
     static let gracePeriodOverrides   = "gracePeriodOverrides"
     static let bootDurationOverrides  = "bootDurationOverrides"
     static let activitySelection  = "activitySelection"
+    static let automationEnabled = "automationEnabled"
+    static let launchPasses = "launchPasses"
 }
 
 class SharedDataManager {
@@ -141,5 +143,81 @@ class SharedDataManager {
         var current = bundleIDs
         current[key] = bundleID
         bundleIDs = current
+    }
+    
+    
+    
+    // stuff for shortcut automation ability
+    var automationEnabled: [String: Bool] {
+        get {
+            guard let data = defaults.data(forKey: SharedKey.automationEnabled),
+                  let decoded = try? JSONDecoder().decode([String: Bool].self, from: data)
+            else { return [:] }
+            return decoded
+        }
+        set {
+            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(encoded, forKey: SharedKey.automationEnabled)
+        }
+    }
+
+    struct AddedApp: Hashable {
+        let stableKey: String
+        let name: String
+        let bundleID: String
+    }
+
+    func addedApps() -> [AddedApp] {
+        let names = appNames
+        let bundles = bundleIDs
+
+        // Only return apps that have both a name AND a bundle ID
+        return names.compactMap { key, name in
+            guard let bundleID = bundles[key], !bundleID.isEmpty else { return nil }
+            return AddedApp(stableKey: key, name: name, bundleID: bundleID)
+        }
+        .sorted { $0.name < $1.name }
+    }
+    
+    
+    // Launch Pass Flags
+    private var launchPasses: [String: TimeInterval] {
+        get {
+            guard let data = defaults.data(forKey: SharedKey.launchPasses),
+                  let decoded = try? JSONDecoder().decode([String: TimeInterval].self, from: data)
+            else { return [:] }
+            return decoded
+        }
+        set {
+            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(encoded, forKey: SharedKey.launchPasses)
+        }
+    }
+
+    func grantLaunchPass(forBundleID bundleID: String, validForMinutes minutes: Int) {
+        var current = launchPasses
+        let expiry = Date().timeIntervalSince1970 + TimeInterval(minutes * 60)
+        current[bundleID] = expiry
+        launchPasses = current
+    }
+    
+    func consumeLaunchPass(forBundleID bundleID: String) -> Bool {
+        var current = launchPasses
+        guard let expiry = current[bundleID] else { return false }
+
+        // Don't remove yet — passes valid for the full grace period get used repeatedly
+        let now = Date().timeIntervalSince1970
+        if now > expiry {
+            current.removeValue(forKey: bundleID)
+            launchPasses = current
+            return false
+        }
+        return true
+    }
+    
+    func clearLaunchPass(forBundleID bundleID: String) {
+        var current = launchPasses
+        current.removeValue(forKey: bundleID)
+        launchPasses = current
     }
 }

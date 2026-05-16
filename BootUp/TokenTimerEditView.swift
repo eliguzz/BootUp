@@ -138,6 +138,27 @@ struct TokenTimerEditView: View {
                                 .foregroundColor(.terminalFaint)
                         }
                     }
+                    
+                    // switch for automation, this honestly does nothing
+                    if #available(iOS 26.0, *) {
+                        Divider().background(Color.terminalFaint)
+
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle(isOn: Binding(
+                                get: { viewModel.isAutomationEnabled(for: token) },
+                                set: { viewModel.setAutomationEnabled($0, for: token) }
+                            )) {
+                                Text("USE SHORTCUTS AUTOMATION")
+                                    .font(.system(size: 13, weight: .medium, design: .monospaced))
+                                    .foregroundColor(.terminal)
+                            }
+                            .tint(.terminal)
+
+                            Text("Faster launch via the Shortcuts app. Requires per-app setup. Notification path still works as a fallback.")
+                                .font(.system(size: 11, design: .monospaced))
+                                .foregroundColor(.terminalFaint)
+                        }
+                    }
 
                     Spacer().frame(height: 16)
 

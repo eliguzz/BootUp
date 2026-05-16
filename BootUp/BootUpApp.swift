@@ -75,8 +75,10 @@ struct BootUpApp: App {
             params?.first(where: { $0.name == "duration" })?.value ?? "30"
         ) ?? Double(SharedDataManager.shared.cooldownDuration)
 
-        // Look up the display name in the main app — the extension skipped this
-        // work to fire the notification faster.
+        // Tagged so we can branch later if needed; for now, behavior is identical.
+        let via = params?.first(where: { $0.name == "via" })?.value ?? "notification"
+        print("[BootUp] Launch triggered via: \(via)")
+
         let name = SharedDataManager.shared.appNames[key] ?? "APP"
 
         targetBundleID = bundle

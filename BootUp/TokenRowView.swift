@@ -24,13 +24,17 @@ struct TokenRowView: View {
 
         let hasBoot  = viewModel.hasBootDurationOverride(for: token)
         let hasGrace = viewModel.hasGracePeriodOverride(for: token)
-
-        switch (hasBoot, hasGrace) {
-        case (true, true):   return "custom boot · custom grace"
-        case (true, false):  return "custom boot"
-        case (false, true):  return "custom grace"
-        case (false, false): return "default timers"
+        var auto = false
+        if #available(iOS 26.0, *) {
+            auto = viewModel.isAutomationEnabled(for: token)
         }
+
+        var parts: [String] = []
+        if auto      { parts.append("automation") }
+        if hasBoot   { parts.append("custom boot") }
+        if hasGrace  { parts.append("custom grace") }
+
+        return parts.isEmpty ? "default timers" : parts.joined(separator: " · ")
     }
     
     

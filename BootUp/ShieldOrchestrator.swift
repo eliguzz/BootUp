@@ -62,11 +62,15 @@ class ShieldOrchestrator {
         // Signal that we're about to deep-link, then attempt it
         completion(.deepLinking)
 
+        // launch pass so automation lets this launch through silently
+        data.grantLaunchPass(
+            forBundleID: bundleID,
+            validForMinutes: gracePeriodMinutes
+        )
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             UIApplication.shared.open(url) { success in
                 print("[ShieldOrchestrator] Deep link to \(scheme) success=\(success)")
-                // The view will already be hidden by iOS at this point if successful;
-                // no further action needed from us.
             }
         }
     }

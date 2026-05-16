@@ -11,9 +11,7 @@ import Foundation
 
 // fails if exceeds 6mb in ram or something
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-
     override func intervalDidEnd(for activity: DeviceActivityName) {
-        super.intervalDidEnd(for: activity)
 
         let database = DataBase()
         guard let activityId = UUID(uuidString: activity.rawValue) else { return }
@@ -21,6 +19,13 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
         let store = ManagedSettingsStore()
         store.shield.applications?.insert(application.applicationToken)
+
+        // clear launch pass so next launch triggers loading screen again
+        let data = SharedDataManager.shared
+        let key = data.stableKey(for: application.applicationToken)
+        if let bundleID = data.bundleIDs[key] {
+            data.clearLaunchPass(forBundleID: bundleID)
+        }
 
         database.removeApplicationProfile(application)
     }
