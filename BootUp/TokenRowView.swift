@@ -49,8 +49,6 @@ struct TokenRowView: View {
                 Text(rowSubtitle)
                     .font(.system(size: 10, weight: .regular, design: .monospaced))
                     .foregroundColor(isUnnamed ? .terminal : .terminalFaint)
-                .font(.system(size: 10, weight: .regular, design: .monospaced))
-                .foregroundColor(isUnnamed ? .terminal : .terminalFaint)
             }
 
             Spacer()
