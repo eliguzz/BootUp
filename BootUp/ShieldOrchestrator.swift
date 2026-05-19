@@ -19,16 +19,16 @@ class ShieldOrchestrator {
     private let data  = SharedDataManager.shared
     private let store = ManagedSettingsStore()
 
-    /// Result the caller uses to decide overlay dismissal timing
+    // Result the caller uses to decide overlay dismissal timing
     enum BootCompletion {
         case deepLinking       // a deep link is being attempted; caller should wait
         case manualReturn      // no urlScheme; caller can dismiss overlay normally
         case failed            // setup failed; caller should dismiss to recover
     }
 
-    /// Called from the main app when the boot sequence completes.
-    /// Callback fires when the orchestrator finishes its work — either
-    /// immediately (manual return, failure) or after the deep link returns.
+    // Called from the main app when the boot sequence completes.
+    // Callback fires when the orchestrator finishes its work — either
+    // immediately (manual return, failure) or after the deep link returns.
     func completeBoot(
         forBundleID bundleID: String,
         completion: @escaping (BootCompletion) -> Void

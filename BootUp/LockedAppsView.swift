@@ -10,16 +10,16 @@ import FamilyControls
 import ManagedSettings
 
 struct LockedAppsView: View {
-
+    
     @ObservedObject var viewModel: AppListViewModel
     @State private var isPickerPresented = false
     @State private var selectedToken: ApplicationToken? = nil
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.appBackground.ignoresSafeArea()
-
+                
                 if viewModel.selection.applicationTokens.isEmpty {
                     emptyState
                 } else {
@@ -53,7 +53,7 @@ struct LockedAppsView: View {
             )
             .sheet(item: $selectedToken) { token in
                 let isNamed = viewModel.appNames[SharedDataManager.shared.stableKey(for: token)] != nil
-
+                
                 if isNamed {
                     TokenTimerEditView(token: token, viewModel: viewModel)
                 } else {
@@ -66,7 +66,7 @@ struct LockedAppsView: View {
             }
         }
     }
-
+    
     private var emptyState: some View {
         VStack(spacing: 20) {
             Image(systemName: "lock.open")
@@ -80,10 +80,11 @@ struct LockedAppsView: View {
                 .foregroundColor(.terminalFaint)
         }
     }
-
+    
     private var appList: some View {
+        
         List {
-            ForEach(Array(viewModel.selection.applicationTokens)) { token in
+            ForEach(sortedTokens) { token in
                 Button(action: { selectedToken = token }) {
                     TokenRowView(token: token, viewModel: viewModel)
                 }
@@ -92,15 +93,25 @@ struct LockedAppsView: View {
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             }
             .onDelete { offsets in
-                var tokens = Array(viewModel.selection.applicationTokens)
-                tokens.remove(atOffsets: offsets)
+                let sorted = sortedTokens
+                let tokensToRemove = offsets.map { sorted[$0] }
+
                 var newSelection = viewModel.selection
-                newSelection.applicationTokens = Set(tokens)
+                for token in tokensToRemove {
+                    newSelection.applicationTokens.remove(token)
+                }
                 viewModel.save(newSelection: newSelection)
             }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color.appBackground)
+    }
+    
+    
+    private var sortedTokens: [ApplicationToken] {
+        viewModel.selection.applicationTokens.sorted {
+            SharedDataManager.shared.stableKey(for: $0) < SharedDataManager.shared.stableKey(for: $1)
+        }
     }
 }
