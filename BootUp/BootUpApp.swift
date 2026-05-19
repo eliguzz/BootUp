@@ -18,7 +18,6 @@ struct BootUpApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     
-    @State private var isShowingShield = false
     @State private var targetBundleID: String = ""
     @State private var targetAppName: String = ""
     @State private var shieldDuration: Double = 30
@@ -27,44 +26,50 @@ struct BootUpApp: App {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var isShowingOnboarding: Bool = false
     
-    
+    private enum LaunchState {
+        case undetermined    // initial — render nothing
+        case main            // normal launch — show MainTabView
+        case shield          // launched into a shield — show ShieldLoadingView
+    }
 
+    @State private var launchState: LaunchState = .undetermined
+    
     init() {
         applyGlobalAppearance()
     }
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                MainTabView()
+            Group {
+                switch launchState {
+                case .undetermined:
+                    Color.appBackground
+                        .ignoresSafeArea()
 
-                if isShowingShield {
+                case .main:
+                    MainTabView()
+
+                case .shield:
                     ShieldLoadingView(
                         appName: targetAppName,
                         bundleID: targetBundleID,
                         totalDuration: shieldDuration,
                         onComplete: handleTimerComplete
                     )
-                    .zIndex(1)
                 }
             }
             .preferredColorScheme(.dark)
-            .animation(nil, value: isShowingShield)
             .sheet(isPresented: $isShowingOnboarding, onDismiss: {
                 hasCompletedOnboarding = true
                 Task { await requestAllPermissions() }
             }) {
                 OnboardingView()
             }
-            .onChange(of: scenePhase) { _, newPhase in
-                if isAwaitingManualReturn && newPhase != .active {
-                    // User left BootUp to open the target app. Dismiss the overlay
-                    // silently so the next time they open BootUp, they see MainTabView.
-                    isShowingShield = false
-                    isAwaitingManualReturn = false
-                }
-            }
             .task {
+                if launchState == .undetermined {
+                    launchState = .main
+                }
+
                 if !hasCompletedOnboarding {
                     isShowingOnboarding = true
                     return
@@ -79,6 +84,12 @@ struct BootUpApp: App {
             ) { notification in
                 if let url = notification.userInfo?["url"] as? URL {
                     handleIncomingURL(url)
+                }
+            }
+            .onChange(of: scenePhase) { _, newPhase in
+                if isAwaitingManualReturn && newPhase != .active {
+                    launchState = .main
+                    isAwaitingManualReturn = false
                 }
             }
         }
@@ -96,15 +107,16 @@ struct BootUpApp: App {
             params?.first(where: { $0.name == "duration" })?.value ?? "30"
         ) ?? Double(SharedDataManager.shared.cooldownDuration)
 
+        let via = params?.first(where: { $0.name == "via" })?.value ?? "notification"
+        print("[BootUp] Launch triggered via: \(via)")
+
         let name = SharedDataManager.shared.appNames[key] ?? "APP"
 
         targetBundleID = bundle
         targetAppName  = name
         shieldDuration = duration
 
-        withAnimation {
-            isShowingShield = true
-        }
+        launchState = .shield
     }
 
     private func handleTimerComplete() {
@@ -113,17 +125,16 @@ struct BootUpApp: App {
             case .deepLinking:
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     withAnimation(.easeInOut(duration: 0.3)) {
-                        isShowingShield = false
+                        launchState = .main
                     }
                 }
 
             case .manualReturn:
-                // Keep the 100% screen up until the user leaves
                 isAwaitingManualReturn = true
 
             case .failed:
                 withAnimation(.easeInOut(duration: 0.6)) {
-                    isShowingShield = false
+                    launchState = .main
                 }
             }
         }
