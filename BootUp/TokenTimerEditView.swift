@@ -14,7 +14,6 @@ struct TokenTimerEditView: View {
     let token: ApplicationToken
     @ObservedObject var viewModel: AppListViewModel
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
 
     // Boot duration state
     @State private var useBootCustom: Bool
@@ -26,8 +25,7 @@ struct TokenTimerEditView: View {
 
     // Automation instructions
     @State private var showInstructions: Bool = false
-
-    private let repoURL = URL(string: "https://github.com/eliguzz/BootUp/blob/main/automationINSTRUCTIONS.md")!
+    @State private var showAutomationGuide: Bool = false
 
     init(token: ApplicationToken, viewModel: AppListViewModel) {
         self.token = token
@@ -175,6 +173,9 @@ struct TokenTimerEditView: View {
                 .padding(32)
             }
         }
+        .sheet(isPresented: $showAutomationGuide) {
+            OnboardingView(slides: automationSlides, finishButtonLabel: "DONE")
+        }
         .presentationDetents([.large])
         .presentationBackground(Color.appBackground)
     }
@@ -226,12 +227,12 @@ struct TokenTimerEditView: View {
                     }
 
                     Button {
-                        openURL(repoURL)
+                        showAutomationGuide = true
                     } label: {
                         HStack(spacing: 6) {
-                            Image(systemName: "chevron.left.forwardslash.chevron.right")
+                            Image(systemName: "play.rectangle")
                                 .font(.system(size: 10))
-                            Text("full guide with screenshots")
+                            Text("watch automation guide")
                                 .font(.system(size: 11, design: .monospaced))
                         }
                         .foregroundColor(.terminalDim)

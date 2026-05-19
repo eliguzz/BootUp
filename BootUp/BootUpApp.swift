@@ -21,6 +21,9 @@ struct BootUpApp: App {
     @State private var targetAppName: String = ""
     @State private var shieldDuration: Double = 30
 
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    @State private var isShowingOnboarding: Bool = false
+
     init() {
         applyGlobalAppearance()
     }
@@ -42,13 +45,18 @@ struct BootUpApp: App {
             }
             .preferredColorScheme(.dark)
             .animation(nil, value: isShowingShield)
+            .sheet(isPresented: $isShowingOnboarding, onDismiss: {
+                hasCompletedOnboarding = true
+                Task { await requestAllPermissions() }
+            }) {
+                OnboardingView()
+            }
             .task {
-                do {
-                    try await center.requestAuthorization(for: .individual)
-                } catch {
-                    print("Failed to get authorization: \(error)")
+                if !hasCompletedOnboarding {
+                    isShowingOnboarding = true
+                    return
                 }
-                await requestNotificationPermission()
+                await requestAllPermissions()
             }
             .onOpenURL { url in
                 handleIncomingURL(url)
@@ -106,6 +114,15 @@ struct BootUpApp: App {
                 }
             }
         }
+    }
+
+    private func requestAllPermissions() async {
+        do {
+            try await center.requestAuthorization(for: .individual)
+        } catch {
+            print("Failed to get authorization: \(error)")
+        }
+        await requestNotificationPermission()
     }
 
     private func requestNotificationPermission() async {

@@ -13,6 +13,9 @@ struct SettingsView: View {
     @ObservedObject var viewModel: AppListViewModel
     @State private var localDuration: Int = 30
     @State private var localGracePeriod: Int = 5
+    @State private var isShowingOnboarding: Bool = false
+    @State private var isShowingAutomationGuide: Bool = false
+    
 
     @Environment(\.openURL) private var openURL
 
@@ -96,6 +99,24 @@ struct SettingsView: View {
                                 .foregroundColor(.terminalFaint)
                         }
 
+                        // Help
+
+                        VStack(alignment: .leading, spacing: 12) {
+                            sectionHeader("HELP")
+
+                            Button {
+                                isShowingOnboarding = true
+                            } label: {
+                                helpRow(icon: "play.rectangle", label: "REPLAY ONBOARDING")
+                            }
+
+                            Button {
+                                isShowingAutomationGuide = true
+                            } label: {
+                                helpRow(icon: "wand.and.stars", label: "AUTOMATION SETUP GUIDE")
+                            }
+                        }
+
                         Spacer().frame(height: 60)
                     }
                     .padding(32)
@@ -127,6 +148,12 @@ struct SettingsView: View {
                         .foregroundColor(.terminal)
                 }
             }
+            .sheet(isPresented: $isShowingOnboarding) {
+                OnboardingView()
+            }
+            .sheet(isPresented: $isShowingAutomationGuide) {
+                OnboardingView(slides: automationSlides, finishButtonLabel: "DONE")
+            }
             .onAppear {
                 localDuration    = viewModel.globalDuration
                 localGracePeriod = max(viewModel.gracePeriod, 1)
@@ -136,7 +163,24 @@ struct SettingsView: View {
             }
         }
     }
-
+    
+    private func helpRow(icon: String, label: String) -> some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(.terminal)
+            Text(label)
+                .font(.system(size: 13, weight: .medium, design: .monospaced))
+                .foregroundColor(.terminal)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.system(size: 11))
+                .foregroundColor(.terminalFaint)
+        }
+        .padding(16)
+        .background(Color.terminalFaint)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+    
     // Subviews
 
     private func stepperButton(_ label: String) -> some View {
