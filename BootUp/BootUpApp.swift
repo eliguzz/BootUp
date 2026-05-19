@@ -15,14 +15,19 @@ struct BootUpApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let center = AuthorizationCenter.shared
-
+    
+    @Environment(\.scenePhase) private var scenePhase
+    
     @State private var isShowingShield = false
     @State private var targetBundleID: String = ""
     @State private var targetAppName: String = ""
     @State private var shieldDuration: Double = 30
+    @State private var isAwaitingManualReturn: Bool = false
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var isShowingOnboarding: Bool = false
+    
+    
 
     init() {
         applyGlobalAppearance()
@@ -50,6 +55,14 @@ struct BootUpApp: App {
                 Task { await requestAllPermissions() }
             }) {
                 OnboardingView()
+            }
+            .onChange(of: scenePhase) { _, newPhase in
+                if isAwaitingManualReturn && newPhase != .active {
+                    // User left BootUp to open the target app. Dismiss the overlay
+                    // silently so the next time they open BootUp, they see MainTabView.
+                    isShowingShield = false
+                    isAwaitingManualReturn = false
+                }
             }
             .task {
                 if !hasCompletedOnboarding {
@@ -83,10 +96,6 @@ struct BootUpApp: App {
             params?.first(where: { $0.name == "duration" })?.value ?? "30"
         ) ?? Double(SharedDataManager.shared.cooldownDuration)
 
-        // Tagged so we can branch later if needed; for now, behavior is identical.
-        let via = params?.first(where: { $0.name == "via" })?.value ?? "notification"
-        print("[BootUp] Launch triggered via: \(via)")
-
         let name = SharedDataManager.shared.appNames[key] ?? "APP"
 
         targetBundleID = bundle
@@ -108,7 +117,11 @@ struct BootUpApp: App {
                     }
                 }
 
-            case .manualReturn, .failed:
+            case .manualReturn:
+                // Keep the 100% screen up until the user leaves
+                isAwaitingManualReturn = true
+
+            case .failed:
                 withAnimation(.easeInOut(duration: 0.6)) {
                     isShowingShield = false
                 }

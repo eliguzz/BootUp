@@ -26,6 +26,10 @@ struct TokenTimerEditView: View {
     // Automation instructions
     @State private var showInstructions: Bool = false
     @State private var showAutomationGuide: Bool = false
+    
+    // shortcut link for deep link alternative
+    @State private var showAdvanced: Bool = false
+    @State private var shortcutNameInput: String = ""
 
     init(token: ApplicationToken, viewModel: AppListViewModel) {
         self.token = token
@@ -34,6 +38,7 @@ struct TokenTimerEditView: View {
         _customBootDuration = State(initialValue: viewModel.effectiveBootDuration(for: token))
         _useGraceCustom     = State(initialValue: viewModel.hasGracePeriodOverride(for: token))
         _customGracePeriod  = State(initialValue: viewModel.effectiveGracePeriod(for: token))
+        _shortcutNameInput  = State(initialValue: viewModel.shortcutName(for: token) ?? "")
     }
 
     var body: some View {
@@ -154,6 +159,14 @@ struct TokenTimerEditView: View {
                             for: token,
                             duration: useGraceCustom ? customGracePeriod : nil
                         )
+                        if !hasNativeURLScheme {
+                            viewModel.setShortcutName(
+                                shortcutNameInput.trimmingCharacters(in: .whitespaces).isEmpty
+                                    ? nil
+                                    : shortcutNameInput.trimmingCharacters(in: .whitespaces),
+                                for: token
+                            )
+                        }
                         dismiss()
                     } label: {
                         Text("SAVE")
@@ -166,6 +179,11 @@ struct TokenTimerEditView: View {
                     }
 
                     Divider().background(Color.terminalFaint)
+                    
+                    if !hasNativeURLScheme {
+                        advancedSection
+                        Divider().background(Color.terminalFaint)
+                    }
 
                     // add shortcuts automation instructions
                     automationInstructionsSection
@@ -242,6 +260,70 @@ struct TokenTimerEditView: View {
             }
         }
     }
+    
+    
+    private var advancedSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showAdvanced.toggle()
+                }
+            } label: {
+                HStack {
+                    Text("ADVANCED — DEEP LINK FALLBACK")
+                        .font(.system(size: 11, weight: .medium, design: .monospaced))
+                        .foregroundColor(.terminalDim)
+                    Spacer()
+                    Image(systemName: showAdvanced ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 11))
+                        .foregroundColor(.terminalDim)
+                }
+            }
+            .buttonStyle(.plain)
+
+            if showAdvanced {
+                VStack(alignment: .leading, spacing: 12) {
+
+                    Text("\(viewModel.appName(for: token)) doesn't expose a URL scheme, so Boot Up can't auto-launch it after the boot sequence. As a workaround, create a Shortcut that opens this app and enter its name below.")
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundColor(.terminalFaint)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        instructionLine("01", "Open the Shortcuts app")
+                        instructionLine("02", "Tap + to create a new Shortcut (not an Automation)")
+                        instructionLine("03", "Add the \"Open App\" action")
+                        instructionLine("04", "Select \(viewModel.appName(for: token)) as the target")
+                        instructionLine("05", "Name the Shortcut, e.g. \"Open \(viewModel.appName(for: token))\"")
+                        instructionLine("06", "Enter that exact name below")
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("SHORTCUT NAME")
+                            .font(.system(size: 11, design: .monospaced))
+                            .foregroundColor(.terminalFaint)
+
+                        TextField("e.g. Open \(viewModel.appName(for: token))", text: $shortcutNameInput)
+                            .font(.system(size: 14, design: .monospaced))
+                            .foregroundColor(.terminal)
+                            .tint(.terminal)
+                            .padding(12)
+                            .background(Color.terminalFaint)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .autocorrectionDisabled()
+                            .autocapitalization(.none)
+                    }
+                    .padding(.top, 4)
+
+                    Text("Must match the Shortcut name exactly. Renaming the Shortcut later will break this.")
+                        .font(.system(size: 10, design: .monospaced))
+                        .foregroundColor(.terminalFaint)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+    }
 
     private func instructionLine(_ number: String, _ text: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
@@ -265,4 +347,12 @@ struct TokenTimerEditView: View {
             .background(Color.terminalFaint)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+    
+    private var hasNativeURLScheme: Bool {
+        guard let bundleID = SharedDataManager.shared.bundleIDs[
+            SharedDataManager.shared.stableKey(for: token)
+        ] else { return false }
+        return knownApps.first(where: { $0.bundleID == bundleID })?.urlScheme != nil
+    }
+    
 }

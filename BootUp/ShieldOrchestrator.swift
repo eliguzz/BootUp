@@ -50,14 +50,35 @@ class ShieldOrchestrator {
 
         startMonitoring(for: profile, gracePeriodMinutes: gracePeriodMinutes)
 
-        // Determine if a deep link will be attempted
-        guard let app = knownApps.first(where: { $0.bundleID == bundleID }),
-              let scheme = app.urlScheme,
-              let url = URL(string: scheme) else {
-            print("[ShieldOrchestrator] No urlScheme for \(bundleID) — manual return")
+        let url: URL? = {
+            // actual url scheme priority
+            if let app = knownApps.first(where: { $0.bundleID == bundleID }),
+               let scheme = app.urlScheme,
+               let nativeURL = URL(string: scheme) {
+                return nativeURL
+            }
+
+            // added user shortcut link option
+            let key = data.stableKey(for: token)
+            if let shortcutName = data.shortcutNames[key],
+               !shortcutName.isEmpty {
+                var components = URLComponents()
+                components.scheme = "shortcuts"
+                components.host   = "run-shortcut"
+                components.queryItems = [URLQueryItem(name: "name", value: shortcutName)]
+                return components.url
+            }
+
+            return nil
+        }()
+
+        guard let url else {
+            print("[ShieldOrchestrator] No deep-link path for \(bundleID) — manual return")
             completion(.manualReturn)
             return
         }
+
+        let scheme = url.scheme ?? "unknown"
 
         // Signal that we're about to deep-link, then attempt it
         completion(.deepLinking)

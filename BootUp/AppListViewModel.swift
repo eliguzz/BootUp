@@ -17,6 +17,7 @@ class AppListViewModel: ObservableObject {
     @Published var appNames: [String: String] = [:]
     @Published var gracePeriodOverrides: [String: Int] = [:]
     @Published var bootDurationOverrides: [String: Int] = [:]
+    @Published var shortcutNames: [String: String] = [:]
     
     private let data = SharedDataManager.shared
     private let store = ManagedSettingsStore()
@@ -28,6 +29,7 @@ class AppListViewModel: ObservableObject {
         appNames              = data.appNames
         gracePeriodOverrides  = data.gracePeriodOverrides
         bootDurationOverrides = data.bootDurationOverrides
+        shortcutNames         = data.shortcutNames
     }
 
     // App Names
@@ -92,6 +94,29 @@ class AppListViewModel: ObservableObject {
         let key = data.stableKey(for: token)
         return bootDurationOverrides[key] != nil
     }
+    
+    // Shortcut Names
+
+    func setShortcutName(_ name: String?, for token: ApplicationToken) {
+        let key = data.stableKey(for: token)
+        if let name, !name.isEmpty {
+            shortcutNames[key] = name
+        } else {
+            shortcutNames.removeValue(forKey: key)
+        }
+        data.shortcutNames = shortcutNames
+    }
+
+    func shortcutName(for token: ApplicationToken) -> String? {
+        let key = data.stableKey(for: token)
+        return shortcutNames[key]
+    }
+
+    func hasShortcutName(for token: ApplicationToken) -> Bool {
+        shortcutName(for: token) != nil
+    }
+    
+    
 
     // Selection — save and apply shields
 

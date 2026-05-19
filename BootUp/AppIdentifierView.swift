@@ -19,7 +19,6 @@ struct AppIdentifierView: View {
     @State private var searchQuery: String = ""
     @State private var selectedApp: KnownApp? = nil
     @State private var customName: String = ""
-    @State private var customBundleID: String = ""
     @State private var showingManual: Bool = false
 
     private var searchResults: [KnownApp] {
@@ -243,31 +242,14 @@ struct AppIdentifierView: View {
                         .autocorrectionDisabled()
                 }
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("BUNDLE ID")
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundColor(.terminalFaint)
-                    Text("Find it at: apple.com/app-store or bundleid.com")
-                        .font(.system(size: 10, design: .monospaced))
-                        .foregroundColor(.terminalFaint)
-                    TextField("e.g. com.zhiliaoapp.musically", text: $customBundleID)
-                        .font(.system(size: 14, design: .monospaced))
-                        .foregroundColor(.terminal)
-                        .tint(.terminal)
-                        .padding(12)
-                        .background(Color.terminalFaint)
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                        .autocorrectionDisabled()
-                        .autocapitalization(.none)
-                }
-
                 Spacer()
 
                 Button {
-                    guard !customName.isEmpty, !customBundleID.isEmpty else { return }
+                    let trimmedName = customName.trimmingCharacters(in: .whitespaces)
+                    guard !trimmedName.isEmpty else { return }
                     selectedApp = KnownApp(
-                        name: customName,
-                        bundleID: customBundleID,
+                        name: trimmedName,
+                        bundleID: "custom.\(UUID().uuidString)",
                         category: "Custom"
                     )
                     showingManual = false
@@ -278,12 +260,12 @@ struct AppIdentifierView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
-                            (!customName.isEmpty && !customBundleID.isEmpty)
+                            !customName.trimmingCharacters(in: .whitespaces).isEmpty
                                 ? Color.terminal : Color.terminalFaint
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
-                .disabled(customName.isEmpty || customBundleID.isEmpty)
+                .disabled(customName.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             .padding(32)
         }

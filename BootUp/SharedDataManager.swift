@@ -12,14 +12,15 @@ import ManagedSettings
 let APP_GROUP_ID = "group.com.eliguzz.bootup"
 
 enum SharedKey {
-    static let cooldownDuration   = "cooldownDuration"
-    static let gracePeriod        = "gracePeriod"
-    static let appNames           = "appNames"
-    static let bundleIDs          = "bundleIDs"
+    static let cooldownDuration       = "cooldownDuration"
+    static let gracePeriod            = "gracePeriod"
+    static let appNames               = "appNames"
+    static let bundleIDs              = "bundleIDs"
     static let gracePeriodOverrides   = "gracePeriodOverrides"
     static let bootDurationOverrides  = "bootDurationOverrides"
-    static let activitySelection  = "activitySelection"
-    static let launchPasses = "launchPasses"
+    static let activitySelection      = "activitySelection"
+    static let launchPasses           = "launchPasses"
+    static let shortcutNames          = "shortcutNames"
 }
 
 class SharedDataManager {
@@ -127,6 +128,21 @@ class SharedDataManager {
             defaults.set(encoded, forKey: SharedKey.bootDurationOverrides)
         }
     }
+    
+    // Shortcut Names (per-app, name of user-created Shortcuts app shortcut)
+    var shortcutNames: [String: String] {
+        get {
+            guard let data = defaults.data(forKey: SharedKey.shortcutNames),
+                  let decoded = try? JSONDecoder().decode([String: String].self, from: data)
+            else { return [:] }
+            return decoded
+        }
+        set {
+            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+            defaults.set(encoded, forKey: SharedKey.shortcutNames)
+        }
+    }
+    
 
     // Stable Token Key
 
