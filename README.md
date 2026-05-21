@@ -5,6 +5,14 @@ Boot Up was created to solve my problem of opening instagram reels whenever I ha
 
 ### [Join the Beta test!](https://testflight.apple.com/join/cWjTfdbt)
 
+## What it does
+* Locks selected apps behind a changeable loading or "boot up" screen (5s-300s)
+* Relocks apps after a changeable grace period (1m–60m)
+* All apps have a changeable defualt boot time and grace time. Can also set custom boot times and grace periods per app.
+* Uses Shortcuts automation for seamless transition to loading screen (only iOS 26 sry)
+* Uses Apple's FamilyControls, ManagedSettings, DeviceActivity APIs, also the App Intents framework
+* Runs all locally, its only 9mb and most of that is just the tutorial videos lol
+
 ## The Psychology
 I like playing video games but I found myself scrolling on instagram even when I had the time to make some progress in the video game I am playing at the time. Why? Because instagram reels loads instantly and my PC or Steam deck takes a minute or two to boot up a game. So I thought, why dont I force a loading screen on instagram as well so I will play my game instead of brain rotting. (lesser of two evils?)
 
@@ -64,12 +72,15 @@ I like playing video games but I found myself scrolling on instagram even when I
 ```
 ## Things to do/figure out
 * Make a github pages thing
-* Add good onboarding tutorial thing I guess
+* ~~Add good onboarding tutorial thing I guess~~
+    - Onboarding and automation tutorial added in v1.3
+    - NEW: Create a video for shortcut open app option for apps that dont have deeplink baked in
 * Add turn off buttons, turn off for every app, turn off per app, potentially turn off grace period or boot timer button option?
 * Figure out how to go directly into app without a notification from static shield screen.
     - this was solved by the shortcut automation option in v1.2, its not perfect as it requres user set up so leaving this still here
     - Need to update pipeline in readme to include shortcut automation potential pipeline
 * make notifications still come through for the shielded apps so I still get instagram dms. also doesnt seem possible with current api
+    - I think this can be done with the automation pipeline. Can somehow only enable the shield to relock but otherwise the app appears normal..?
 * Shield api locking down widgets for some apps. Somehow unlock the widgets but leave apps locked
 * speed up notification coming from primary button in static shield screen somehow
 * Figure out @AppStorage to replace UserDefaults, it broke the DeviceActivityMonitor extension before...
