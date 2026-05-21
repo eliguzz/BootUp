@@ -12,7 +12,7 @@ Boot Up uses Apple's Screen Time framework to insert a boot timer before opening
 
 ## Third-Party Services
 
-BootUp does not integrate with any third-party analytics, tracking, or advertising services.
+Boot Up does not integrate with any third-party analytics, tracking, or advertising services.
 
 ## Open Source
 
