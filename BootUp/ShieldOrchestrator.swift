@@ -34,7 +34,7 @@ class ShieldOrchestrator {
         completion: @escaping (BootCompletion) -> Void
     ) {
         guard let token = findToken(forBundleID: bundleID) else {
-            print("[ShieldOrchestrator] No token for bundleID \(bundleID)")
+            //  No token for bundleID
             completion(.failed)
             return
         }
@@ -43,10 +43,8 @@ class ShieldOrchestrator {
 
         let profile = ApplicationProfile(applicationToken: token)
         DataBase().addApplicationProfile(profile)
-        print("[ShieldOrchestrator] Created profile \(profile.id) for \(bundleID)")
 
         store.shield.applications?.remove(token)
-        print("[ShieldOrchestrator] Removed shield for \(bundleID)")
 
         startMonitoring(for: profile, gracePeriodMinutes: gracePeriodMinutes)
 
@@ -73,12 +71,10 @@ class ShieldOrchestrator {
         }()
 
         guard let url else {
-            print("[ShieldOrchestrator] No deep-link path for \(bundleID) — manual return")
+            // No deep link path for app
             completion(.manualReturn)
             return
         }
-
-        let scheme = url.scheme ?? "unknown"
 
         // Signal that we're about to deep-link, then attempt it
         completion(.deepLinking)
@@ -91,7 +87,6 @@ class ShieldOrchestrator {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             UIApplication.shared.open(url) { success in
-                print("[ShieldOrchestrator] Deep link to \(scheme) success=\(success)")
             }
         }
     }
@@ -152,9 +147,9 @@ class ShieldOrchestrator {
                 during: schedule,
                 events: event
             )
-            print("[ShieldOrchestrator] Monitoring started for \(gracePeriodMinutes)m")
+            // Monitoring started
         } catch {
-            print("[ShieldOrchestrator] Monitoring error: \(error)")
+            // monitoring failed
         }
     }
 }

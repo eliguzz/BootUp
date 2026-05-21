@@ -57,6 +57,9 @@
 		078D7A602FB409E600752EDA /* BootUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078D7A5F2FB409E600752EDA /* BootUpApp.swift */; };
 		0797C91E2FB4161D0010D73E /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0797C91D2FB4161D0010D73E /* Color+Theme.swift */; };
 		07AFEE8A2FB90C4E009A52F0 /* LaunchWithBootUpIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AFEE892FB90C4E009A52F0 /* LaunchWithBootUpIntent.swift */; };
+		07C638912FBF7473007C4742 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 07C638902FBF7473007C4742 /* PrivacyInfo.xcprivacy */; };
+		07C638932FBF7482007C4742 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 07C638922FBF7482007C4742 /* PrivacyInfo.xcprivacy */; };
+		07C638952FBF748E007C4742 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 07C638942FBF748E007C4742 /* PrivacyInfo.xcprivacy */; };
 		07E705472FB915A700ED5F45 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3402FB41CB7004E692B /* SharedDataManager.swift */; };
 		07E705482FB915A700ED5F45 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3402FB41CB7004E692B /* SharedDataManager.swift */; };
 		07E705492FB915A700ED5F45 /* SharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078AD3402FB41CB7004E692B /* SharedDataManager.swift */; };
@@ -158,6 +161,9 @@
 		078D7A5F2FB409E600752EDA /* BootUpApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootUpApp.swift; sourceTree = "<group>"; };
 		0797C91D2FB4161D0010D73E /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 		07AFEE892FB90C4E009A52F0 /* LaunchWithBootUpIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchWithBootUpIntent.swift; sourceTree = "<group>"; };
+		07C638902FBF7473007C4742 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		07C638922FBF7482007C4742 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		07C638942FBF748E007C4742 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				07611D2A2FB54F8300E4FC3B /* ShieldActionExtension.swift */,
+				07C638902FBF7473007C4742 /* PrivacyInfo.xcprivacy */,
 				074564F72FB2788D00A44341 /* Info.plist */,
 				074564F82FB2788D00A44341 /* ShieldActionExtension.entitlements */,
 			);
@@ -285,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				07611D2C2FB54FAC00E4FC3B /* ShieldConfigurationExtension.swift */,
+				07C638922FBF7482007C4742 /* PrivacyInfo.xcprivacy */,
 				0745650B2FB278A500A44341 /* Info.plist */,
 				0745650C2FB278A500A44341 /* ShieldConfigurationExtension.entitlements */,
 			);
@@ -295,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				07611D2E2FB54FEF00E4FC3B /* DeviceActivityMonitorExtension.swift */,
+				07C638942FBF748E007C4742 /* PrivacyInfo.xcprivacy */,
 				0745651D2FB278BB00A44341 /* Info.plist */,
 				0745651E2FB278BB00A44341 /* DeviceActivityMonitorExtension.entitlements */,
 			);
@@ -476,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C638912FBF7473007C4742 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +493,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C638932FBF7482007C4742 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C638952FBF748E007C4742 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

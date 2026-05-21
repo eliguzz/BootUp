@@ -107,9 +107,6 @@ struct BootUpApp: App {
             params?.first(where: { $0.name == "duration" })?.value ?? "30"
         ) ?? Double(SharedDataManager.shared.cooldownDuration)
 
-        let via = params?.first(where: { $0.name == "via" })?.value ?? "notification"
-        print("[BootUp] Launch triggered via: \(via)")
-
         let name = SharedDataManager.shared.appNames[key] ?? "APP"
 
         targetBundleID = bundle
@@ -144,7 +141,7 @@ struct BootUpApp: App {
         do {
             try await center.requestAuthorization(for: .individual)
         } catch {
-            print("Failed to get authorization: \(error)")
+            // no screen time authorizations
         }
         await requestNotificationPermission()
     }
@@ -161,7 +158,7 @@ struct BootUpApp: App {
             _ = try await center.requestAuthorization(
                 options: [.alert, .sound])
         } catch {
-            print("Notification authorization error: \(error)")
+            //no notification authorization
         }
     }
 

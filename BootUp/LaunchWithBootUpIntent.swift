@@ -49,7 +49,7 @@ struct LaunchWithBootUpIntent: AppIntent {
             duration = data.cooldownDuration
         }
 
-        let urlString = "bootup://launch?bundle=\(bundleID)&duration=\(duration)&key=\(key)&via=automation"
+        let urlString = "bootup://launch?bundle=\(bundleID)&duration=\(duration)&key=\(key)"
 
         guard let url = URL(string: urlString) else {
             return .result()

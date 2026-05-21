@@ -38,7 +38,6 @@ final class LoopingPlayerUIView: UIView {
 
     private func setupPlayer(videoName: String, videoExtension: String) {
         guard let url = Bundle.main.url(forResource: videoName, withExtension: videoExtension) else {
-            print("[LoopingVideoPlayer] Missing video: \(videoName).\(videoExtension)")
             return
         }
 
