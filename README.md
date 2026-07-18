@@ -3,7 +3,9 @@ Boot Up was created to solve my problem of opening instagram reels whenever I ha
 
 <img width="1018" height="469" alt="IMG_4662" src="https://github.com/user-attachments/assets/ce3606b1-5072-4f87-b752-fa5b3a60df22" />
 
-### [Join the Beta test!](https://testflight.apple.com/join/cWjTfdbt)
+### [Join the Beta testers!](https://testflight.apple.com/join/cWjTfdbt)
+
+### [Download on the app store](https://apps.apple.com/us/app/boot-up-focus/id6768882536)
 
 ## What it does
 * Open a locked app and get intercepted by a loading screen, loading screen completes and get sent back to the now unlocked app
